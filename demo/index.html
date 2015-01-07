@@ -18,18 +18,20 @@
 			padding: 10px;
 		}
 		
-		.visited.true { opacity: .5; }
+		.visited.true { opacity: .25; }
 		
 	</style>
 	
 </head>
 <body>
 	
-	<h1 id="foo" class="visited">This is a head</h1>
+	<h1 class="visited">This is a head</h1>
 	
-	<h2 id="bar" class="visited">This is a head</h2>
+	<h2 class="visited">This is a head</h2>
 	
-	<div id="baz" class="visited">This is a div</div>
+	<div class="visited">This is a div</div>
+	
+	<h2>Not visited</h2>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -38,7 +40,17 @@
 		
 		$(document).ready(function() {
 			
+			console.log($.cookie('visited'));
 			
+			if ($.cookie('visited') == 1) {
+				
+				console.log($('.visited'));
+				
+				$('.visited').addClass('true');
+				
+			}
+			
+			$.cookie('visited', 1);
 			
 		});
 		
