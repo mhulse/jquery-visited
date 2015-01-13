@@ -1,36 +1,88 @@
 // declare 'Singleton' as the returned value of a self-executing anonymous function
 // http://stackoverflow.com/a/12450945/922323
 var Singleton = (function () {
-	"use strict";
-	// 'instance' and 'constructor' should not be availble in a "public" scope
-	// here they are "private", thus available only within 
-	// the scope of the self-executing anonymous function
-	var _instance=null;
-	var _constructor = function (name) {
-		this.name = name || 'default';
-	}
-
-	// prototypes will be "public" methods available from the instance
+	
+	'use strict';
+	
+	var _instance = null;
+	
+	var _console = (window.console || { log: function() {}, warn: function() {} });
+	
+	var _name;
+	
+	var _constructor = function(name) {
+		
+		this._name = name || 'default';
+		
+		return (storage) ? instance : {}; // Alternatives?
+		
+	};
+	
+	_constructor.prototype.get = function() {
+		
+		return localStorage.getItem('visited');
+		
+	};
+	
+	_constructor.prototype.set = function(value) {
+		
+		return localStorage.setItem('visited', value);
+		
+	};
+	
+	_constructor.prototype.remove = function() {
+		
+		return localStorage.removeItem('visited');
+		
+	};
+	
+	_constructor.prototype.items = function() {
+		
+		document.getElementById();
+		
+	};
+	
 	_constructor.prototype.getName = function () {
-		return this.name;
+		
+		return this._name;
+		
 	}
-
-	// using the module pattern, return a static object
-	// which essentially is a list of "public static" methods
+	
 	return {
-		// because getInstance is defined within the same scope
-		// it can access the "private" 'instance' and 'constructor' vars
-		getInstance:function (name) {
-			if (!_instance) {
-				console.log('creating'); // this should only happen once
+		
+		getInstance: function(name) {
+			
+			if ( ! _instance) {
+				
+				console.log('creating');
+				
 				_instance = new _constructor(name);
+				
 			}
+			
 			console.log('returning');
+			
 			return _instance;
+			
 		}
+		
 	}
-
-})(); // self execute
+	
+	function storage() {
+		
+		try {
+			
+			return (('localStorage' in window) && (window.localStorage !== null));
+			
+		} catch($e) {
+			
+			return false;
+			
+		}
+		
+	}
+	
+})();
 
 // ensure 'instance' and 'constructor' are unavailable 
 // outside the scope in which they were defined
@@ -46,67 +98,4 @@ var b = Singleton.getInstance('second'); // passing a name here does nothing bec
 console.log(a === b); // true
 
 console.log(a.getName()); // "first"
-console.log(b.getName()); // also returns "first" because it's the same instance as 'a'
-
-
-
-// Class-like singleton:
-function Visited($options) {
-	
-	'use strict';
-	
-	var console = (window.console || { log: function() {}, warn: function() {} });
-	
-	var instance = this;
-	
-	instance.get = function() {
-		
-		return localStorage.getItem('visited');
-		
-	};
-	
-	instance.set = function(value) {
-		
-		return localStorage.setItem('visited', value);
-		
-	};
-	
-	instance.remove = function() {
-		
-		return localStorage.removeItem('visited');
-		
-	};
-	
-	instance.items = function() {
-		
-		document.getElementById()
-		
-	};
-	
-	Visited = function($options) {
-		
-		console.log($options);
-		
-		return (storage) ? instance : {}; // Alternatives?
-		
-	};
-	
-	function storage() {
-		
-		try {
-			
-			return (('localStorage' in window) && (window['localStorage'] !== null));
-			
-		} catch($e) {
-			
-			return false;
-			
-		}
-		
-	}
-	
-}
-
-var my1 = new Visited({ foo: 'bar' });
-var my2 = new Visited();
-console.log(my1 === my2);
+console.log(b.getName()); // also returns "first" because it's the same instance as 'a
