@@ -14,7 +14,7 @@ var Singleton = (function () {
 		
 		this._name = name || 'default';
 		
-		return (storage) ? instance : {}; // Alternatives?
+		return (storage) ? _instance : {}; // Alternatives?
 		
 	};
 	
@@ -46,7 +46,7 @@ var Singleton = (function () {
 		
 		return this._name;
 		
-	}
+	};
 	
 	return {
 		
@@ -66,7 +66,7 @@ var Singleton = (function () {
 			
 		}
 		
-	}
+	};
 	
 	function storage() {
 		
